@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+//User Panel Start
+use App\Http\Controllers\User\Homecontroller;
+use App\Http\Controllers\User\Auth\LoginController;
+use App\Http\Controllers\User\Auth\RegisterController;
+//User Panel End
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +18,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//User Panel Start
+Route::get('/', [Homecontroller::class, 'index'])->name('user.home');
+Route::get('/login',[LoginController::class, 'index'])->name('user.login');
+Route::get('/register',[RegisterController::class,'index'])->name('user.register');
+Route::post('/search-sponsor', [RegisterController::class, 'search_sponsorid'])->name('search_sponsorid');
+Route::post('/store', [RegisterController::class, 'store'])->name('user.store');
+
+//User Panel End
