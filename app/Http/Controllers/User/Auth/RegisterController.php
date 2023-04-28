@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use Hash;
 class RegisterController extends Controller
 {
    public function index(){
@@ -31,10 +31,27 @@ class RegisterController extends Controller
          'last_name'=>'required|min:2|max:25',
          'username'=>'required|unique:users',
          'email'=>'required|unique:users',
-         'password'=>'required|confirmed|min:6',
-         'username'=>'required',
+         'mobile'=>'required|min:11',
+         'password'=>'required|min:6',
+         'confirm_password'=>'required',
          
       ]);
+
+      $sponsor_check = User::where(['username'=>$request->sponsor_id,'status'=>1])->exists();
+      if($sponsor_check){
+         $sponsor_details = User::where(['username'=>$request->sponsor_id,'status'=>1])->first();
+         $model = new user();
+         $model->first_name = $request->first_name;
+         $model->last_name =  $request->last_name;
+         $model->username =   $request->username;
+         $model->email =      $request->email;
+         $model->mobile =     $request->mobile;
+         $model->sponser_code = $sponsor_details->id;
+         $model->password =   Hash::make($request->password);
+         $model->save();
+      }else{
+
+      }
       
    }
 }

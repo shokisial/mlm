@@ -16,7 +16,7 @@ return new class extends Migration
             $table->biginteger('main_id');
             $table->biginteger('mmember_id');
             $table->biginteger('gen_type');
-            $table->tinyinteger('status')->default(1);
+        
             $table->timestamps();
         });
     }
